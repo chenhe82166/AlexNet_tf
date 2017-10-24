@@ -35,7 +35,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 init = tf.initialize_all_variables()
 saver = tf.train.Saver() # Saver类提供了向checkpoints文件保存和从checkpoints文件中恢复变量的相关方法。
                          # Checkpoints文件是一个二进制文件，它把变量名映射到对应的tensor值 。
-tf.add_to_collection("x", x)
+tf.add_to_collection("x", x)# tf.add_to_collection：把变量放入一个集合，把很多变量变成一个列表
 tf.add_to_collection("y", y)
 tf.add_to_collection("keep_prob", keep_prob)
 tf.add_to_collection("pred", pred)
