@@ -13,10 +13,11 @@ def max_pool(name, l_input, k, s):
     return tf.nn.max_pool(l_input, ksize=[1, k, k, 1], strides=[1, s, s, 1], padding='VALID', name=name)
 
 def norm(name, l_input, lsize=4):
+    # tf.nn.local_response_normalization,简写为tf.nn.lrn
     return tf.nn.lrn(l_input, lsize, bias=1.0, alpha=0.001 / 9.0, beta=0.75, name=name)
 
 def alex_net(_X, _dropout, n_classes, imagesize, img_channel):
-    # Store layers weight & bias
+    # Store layers weight & bias 存储层权重和偏差
     _weights = {
         'wc1': tf.Variable(tf.random_normal([11, 11, img_channel, 64])),
         'wc2': tf.Variable(tf.random_normal([5, 5, 64, 192])),
@@ -39,7 +40,7 @@ def alex_net(_X, _dropout, n_classes, imagesize, img_channel):
         'bd2': tf.Variable(tf.random_normal([4096])),
         'out': tf.Variable(tf.random_normal([n_classes]))
     }
-    # Reshape input picture OH WAIT NOPE CUS JE SUIS UN TENSAI DESU
+    # Reshape input picture 重塑输入图片
     _X = tf.reshape(_X, shape=[-1, imagesize, imagesize, img_channel])
 
     # Convolution Layer
@@ -73,7 +74,7 @@ def alex_net(_X, _dropout, n_classes, imagesize, img_channel):
     norm3 = tf.nn.dropout(norm3, _dropout)
 
     # Fully connected layer
-    dense1 = tf.reshape(norm3, [-1, _weights['wd1'].get_shape().as_list()[0]]) # Reshape conv3 output to fit dense layer input
+    dense1 = tf.reshape(norm3, [-1, _weights['wd1'].get_shape().as_list()[0]]) # Reshape conv3 output to fit dense layer input 重新组合conv3输出以适应密集层输入
     dense1 = tf.nn.relu(tf.matmul(dense1, _weights['wd1']) + _biases['bd1'], name='fc1') # Relu activation
 
     dense2 = tf.nn.relu(tf.matmul(dense1, _weights['wd2']) + _biases['bd2'], name='fc2') # Relu activation
