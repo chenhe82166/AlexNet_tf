@@ -51,7 +51,7 @@ with tf.Session() as sess:
             acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys, keep_prob: 1.})
             loss = sess.run(cost, feed_dict={x: batch_xs, y: batch_ys, keep_prob: 1.})
             rate = sess.run(lr)
-            print "lr " + str(rate) + " Iter " + str(step) + ", Minibatch Loss= " + "{:.6f}".format(loss) + ", Training Accuracy= " + "{:.5f}".format(acc)
+            print( "lr" + str(rate) + " Iter " + str(step) + ", Minibatch Loss= " + "{:.6f}".format(loss) + ", Training Accuracy= " + "{:.5f}".format(acc))
 
         if step % 1000 == 0:# 每训练1000次保存一下checkpoints
             saver.save(sess, 'save/model.ckpt', global_step=step*batch_size)
@@ -59,9 +59,9 @@ with tf.Session() as sess:
                                          # checkpoint_dir + 'model.ckpt'：表示存储的文件名
                                          # global_step：表示当前是第几步
         step += 1
-    print "Optimization Finished!"
+    print( "Optimization Finished!")
     step_test = 1
     while step_test * batch_size < len(testing):
         testing_ys, testing_xs = testing.nextBatch(batch_size)
-        print "Testing Accuracy:", sess.run(accuracy, feed_dict={x: testing_xs, y: testing_ys, keep_prob: 1.})
+         print( "Testing Accuracy:", sess.run(accuracy, feed_dict={x: testing_xs, y: testing_ys, keep_prob: 1.}))
         step_test += 1
