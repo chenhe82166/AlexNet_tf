@@ -17,7 +17,7 @@ class Dataset:
         self.category2label = dict(zip(category, range(len(category))))
         self.label2category = {l: k for k, l in self.category2label.items()}
 
-        # Convert the labels to numbers
+        # Convert the labels to numbers 将标签转换为数字
         self.labels = [self.category2label[l] for l in self.labels]
 
     def __len__(self):
@@ -52,7 +52,7 @@ class Dataset:
             self.category2label = dict(zip(category, range(len(category))))
             self.label2category = {l: k for k, l in self.category2label.items()}
     
-            # Convert the labels to numbers
+            # Convert the labels to numbers 将标签转换为数字
             self.labels = [self.category2label[l] for l in self.labels]
 #            return None
         label = self.onehot(self.labels[self.next_record])
@@ -90,14 +90,14 @@ def createImageList(imagePath, extensions):
                 dirpath, dirnames, filenames = w.next()
             except StopIteration:
                 break
-            # Don't enter directories that begin with '.'
+            # Don't enter directories that begin with '.' 不要输入以'.'开头的目录
             for d in dirnames[:]:
                 if d.startswith('.'):
                     dirnames.remove(d)
             dirnames.sort()
-            # Ignore files that begin with '.'
+            # Ignore files that begin with '.' 忽略以'.'开头的文件
             filenames = [f for f in filenames if not f.startswith('.')]
-            # Only load images with the right extension
+            # Only load images with the right extension 只能加载具有正确扩展名的图像
             filenames = [f for f in filenames if os.path.splitext(f)[1].lower() in extensions]
             filenames.sort()
             # imageFilenames = [os.path.join(dirpath, f) for f in filenames]
@@ -113,6 +113,8 @@ def _walk(top):
     stripped down.  It improves on the 2.5 os.walk() by adding
     the 'followlinks' capability.
     GLU: copied from image sensor
+    目录树生成器从python 2.6中提取，然后被删除。 它通过添加“followlinks”功能来改善2.5 os.walk（）。
+    GLU：从图像传感器复制
     """
     names = os.listdir(top)
     dirs, nondirs = [], []
